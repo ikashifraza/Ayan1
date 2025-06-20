@@ -1,7 +1,9 @@
 name: Node.js Bot
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'   # Har 5 minute baad chalne ke liye
+  workflow_dispatch:        # Manual run ka option bhi rahega
 
 jobs:
   build:
@@ -9,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]  # ✅ Updated from 14.x to 18.x for ??= support
+        node-version: [18.x]
 
     steps:
       - name: Checkout code

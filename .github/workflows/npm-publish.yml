@@ -1,0 +1,32 @@
+name: Node.js Bot
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]  # ✅ Updated from 14.x to 18.x for ??= support
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install canvas libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++ pkg-config libpixman-1-dev
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start your bot
+        run: npm start
